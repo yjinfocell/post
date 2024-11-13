@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overlay com Link para Telegram</title>
+    <style>
+        /* Estilização para o iframe */
+        #contentFrame {
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Estilização para a camada com o link */
+        #overlay {
+            position: absolute;
+            top: 150px; /* ajuste conforme necessário */
+            left: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        #overlay a {
+            text-decoration: none;
+            color: #0088cc; /* Cor azul do Telegram */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Iframe que carrega a página original -->
+    <iframe id="contentFrame" src="https://www.packzin.com.br/service/novo/video-personalizado-0Dq-IcSKP"></iframe>
+
+    <!-- Camada que exibe o link para o Telegram -->
+    <div id="overlay">
+        <a href="https://t.me/marcy_pink" target="_blank">Compre pelo Telegram e ganhe desconto 📲</a>
+    </div>
+
+    <script>
+        // JavaScript para tornar o overlay arrastável
+        const overlay = document.getElementById("overlay");
+
+        overlay.onmousedown = function(event) {
+            event.preventDefault();
+
+            let shiftX = event.clientX - overlay.getBoundingClientRect().left;
+            let shiftY = event.clientY - overlay.getBoundingClientRect().top;
+
+            function moveAt(pageX, pageY) {
+                overlay.style.left = pageX - shiftX + 'px';
+                overlay.style.top = pageY - shiftY + 'px';
+            }
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+
+            overlay.onmouseup = function() {
+                document.removeEventListener('mousemove', onMouseMove);
+                overlay.onmouseup = null;
+            };
+        };
+
+        overlay.ondragstart = function() {
+            return false;
+        };
+    </script>
+
+</body>
+</html>
